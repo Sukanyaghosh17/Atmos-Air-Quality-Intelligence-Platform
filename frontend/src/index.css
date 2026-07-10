@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Custom scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3A5A40; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #588157; }
+
+/* ── Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Glassmorphism helpers ───────────────────────────────────────── */
+@layer components {
+  .glass-dark {
+    background: rgba(36, 56, 40, 0.45);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid rgba(88, 129, 87, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-light {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid rgba(88, 129, 87, 0.18);
+    box-shadow: 0 8px 32px rgba(52, 78, 65, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+
+  /* AQI color helpers */
+  .aqi-good        { color: #22c55e; }
+  .aqi-moderate    { color: #eab308; }
+  .aqi-sensitive   { color: #f97316; }
+  .aqi-unhealthy   { color: #ef4444; }
+  .aqi-very        { color: #a855f7; }
+  .aqi-hazardous   { color: #dc2626; }
+
+  .bg-aqi-good        { background-color: #22c55e; }
+  .bg-aqi-moderate    { background-color: #eab308; }
+  .bg-aqi-sensitive   { background-color: #f97316; }
+  .bg-aqi-unhealthy   { background-color: #ef4444; }
+  .bg-aqi-very        { background-color: #a855f7; }
+  .bg-aqi-hazardous   { background-color: #dc2626; }
+
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+    border-radius: 1rem;
+    background-clip: padding-box;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #588157, #3A5A40, #A3B18A, #344E41);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    z-index: -1;
+  }
+
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Number ticker animation */
+  .ticker {
+    display: inline-block;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(88, 129, 87, 0.08) 25%,
+      rgba(88, 129, 87, 0.18) 50%,
+      rgba(88, 129, 87, 0.08) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite;
+    border-radius: 0.5rem;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+/* ── Recharts overrides ──────────────────────────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  border-radius: 0.75rem !important;
+  border: 1px solid rgba(88, 129, 87, 0.25) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.8rem !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+}
+
+/* ── Smooth page transitions ─────────────────────────────────────── */
+.page-enter { opacity: 0; transform: translateY(8px); }
+.page-enter-active { opacity: 1; transform: translateY(0); transition: all 0.35s ease; }
