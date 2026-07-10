@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { MOCK_DATA } from "../data/mockData";
 
-const BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 async function safeFetch(url, fallback) {
   try {
